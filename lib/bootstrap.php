@@ -1,12 +1,28 @@
 <?
-
 class app
 {
-    global $segments;
+    public $segments;
     public function __construct()
     {
+    	global $segments;
         $this->segments();
-        var_dump($this->segments);
+        $route = $this->segments[3];
+        $route_class = new routes;
+        $route = $route_class->search($route);
+        if($route == 0)
+        {
+        	include(ROOT.DS.'app'.DS.'controllers'.DS.'BaseController.php');
+        	$page = new BaseController;
+        	$page->p404();
+        }
+        else
+        {
+        	$controller = explode('@',$route);
+        	include(ROOT.DS.'app'.DS.'controllers'.DS.$controller[1].'.php');
+        	$page = new $controller[1];
+        	$page->$controller[0]();	
+        }
+        
     }
     private function segments()
     {
