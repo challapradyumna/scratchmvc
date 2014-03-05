@@ -7,8 +7,7 @@ class app
     	global $segments;
         $this->segments();
         $route = $this->segments[3];
-        $route_class = new routes;
-        $route = $route_class->search($route);
+        Route::search($route);
         if($route == 0)
         {
         	include(ROOT.DS.'app'.DS.'controllers'.DS.'BaseController.php');
